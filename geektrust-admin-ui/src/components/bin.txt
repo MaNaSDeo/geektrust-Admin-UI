@@ -1,0 +1,177 @@
+"index.js"
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+"App.js"
+import { useEffect, useState } from 'react';
+import './App.css';
+import axios from 'axios';
+import Table from "./components/Table";
+import PopUpForm from './components/PopUpForm';
+
+function App() {
+
+  const api_URL = 'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json';
+
+  const [originalTableData, setOriginalTableData] = useState([]); // Original array
+  const [tableData, setTableData] = useState([]); // Array that can change
+  const [formVisibility, setFormVisibility] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, []);
+
+  const fetchUserDetails = async () => {
+    const response = await axios.get(api_URL)
+    if (response.status === 200) {
+      const datas = await response.data;
+      setOriginalTableData(datas); // Store the original data
+      setTableData(datas); // Initialize tableData with the original data
+    }
+  }
+
+
+
+
+
+  return (
+    <div className="App">
+      <h1>Hello India! New One</h1>
+      <input type='text' placeholder='Search by name, email or role' />
+      {formVisibility ? <PopUpForm handleFormVisibility={setFormVisibility} tableData={tableData} handleTableData={setTableData} selectedId={selectedId} /> : <></>}
+      <Table tableData={tableData} handleTableData={setTableData} handleFormVisibility={setFormVisibility} setSelectedId={setSelectedId} />
+    </div>
+  );
+}
+
+export default App;
+"Table.js"
+import TableRow from "./TableRow";
+import "./component.css";
+
+export default function Table({ tableData, handleTableData, handleFormVisibility, setSelectedId }) {
+    return (
+        <div>
+            <table>
+                <thead className='tableRow'>
+                    <input type="checkbox" />
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </thead>
+                <TableRow tableData={tableData} handleTableData={handleTableData} handleFormVisibility={handleFormVisibility} setSelectedId={setSelectedId} />
+            </table>
+        </div>
+    );
+}
+"TableRow.js"
+import handleDelete from "./DeleteRow";
+
+import "./component.css";
+
+export default function TableRow({ tableData, handleTableData, handleFormVisibility, setSelectedId }) {
+    return (
+        <div>
+            <tbody>
+                {tableData.map((data) =>
+                    <tr key={data.id} className='tableRow'>
+                        <input type="checkbox" id={data.id} name={data.id} className='rowInput' onChange={(event) => {
+                            // handleCheckboxChange(data.id)
+                            console.log("hello");
+                        }} />
+                        <td className='rowName'>{data.name}</td>
+                        <td className='rowEmail'>{data.email}</td>
+                        <td className='rowRole'>{data.role}</td>
+                        <td className='rowBtn'>
+                            <button onClick={() => {
+                                handleDelete(data.id, tableData, handleTableData)
+                            }}>
+                                Delete
+                            </button>
+                            <button onClick={() => {
+                                handleFormVisibility(true);
+                                setSelectedId(data.id);
+                            }}>
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                )}
+            </tbody>
+        </div>
+    )
+}
+"DeleteRow.js"
+export default function handleDelete(id, tableData, handleTableData) {
+    const updatedTableData = tableData.filter((object) => object.id !== id);
+    handleTableData(updatedTableData);
+}
+"PopUpForm.js"
+import { useState, useEffect } from "react";
+
+
+export default function PopUpForm({ rowDetails, handleTableData, handleFormVisibility, tableData, selectedId }) {
+
+    let indexOfRow;
+    tableData.forEach((element, index) => {
+        if (parseInt(element.id) === parseInt(selectedId))
+            indexOfRow = index;
+    });
+    const rowData = tableData[indexOfRow]
+    const [rowName, setRowName] = useState(rowData ? rowData.name : "");
+    const [rowEmail, setRowEmail] = useState(rowData ? rowData.email : "");
+    const [rowRole, setRowRole] = useState(rowData ? rowData.role : "");
+
+    useEffect(() => {
+        if (rowData) {
+            setRowName(rowData.name);
+            setRowEmail(rowData.email);
+            setRowRole(rowData.role);
+        }
+    }, [rowData]);
+
+    return (
+        <div className='form-popup' id='myForm'>
+            <form className='form-container'>
+                <h1>Edit Details</h1>
+
+                {/* To Edit Name */}
+                <label htmlFor='name'><h4>Name:</h4></label>
+                <input type='text' placeholder='Enter name' name='name' value={rowName} onChange={(event) => { setRowName(event.target.value) }}></input>
+
+                {/* To Edit Email */}
+                <label htmlFor='email'><h4>Email:</h4></label>
+                <input type='email' placeholder='Enter email' name='email' value={rowEmail} onChange={(event) => { setRowEmail(event.target.value) }}></input>
+
+                {/* To Edit Role */}
+                <label htmlFor='role'><h4>Role:</h4></label>
+                <input type='text' placeholder='Enter role' name='role' value={rowRole} onChange={(event) => { setRowRole(event.target.value) }}></input>
+
+                <button className='btn' onClick={(event) => {
+                    event.preventDefault();
+                    const rowTableData = { id: rowData.id, name: rowName, email: rowEmail, role: rowRole };
+                    const updatedTableData = [...tableData];
+                    updatedTableData[indexOfRow] = rowTableData;
+                    handleTableData(updatedTableData);
+                    handleFormVisibility(false);
+
+                }}>Submit</button>
+
+                <button type='button' className='btn close'
+                    onClick={() => { handleFormVisibility(false) }}
+
+                >Close</button>
+            </form>
+        </div>
+    );
+}

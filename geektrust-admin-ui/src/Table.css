@@ -1,0 +1,98 @@
+table{
+    font-family: sans-serif;
+    width:100%;
+    margin: 20px;
+    border-collapse: collapse;
+    /* border: 2px solid rgb(200,200,200); */
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+.tableRow{
+    /* justify-content: space-between; */
+}
+td, th {
+    /* border: 1px solid rgb(190,190,190); */
+    /* border-bottom: 1px solid rgb(190,190,190); */
+    padding: 10px 20px;
+  }
+tr{
+    border-bottom: 1px solid rgb(190,190,190);
+    text-align: left;
+}
+thead{
+    text-align: left;
+    border-bottom: 1px solid rgb(190,190,190);
+}
+thead > input{
+    display: flex;
+    align-items: center;
+}
+/* .rowInput{
+    text-align: left;
+}
+.rowName{
+    text-align: left;
+}
+.rowEmail{
+    text-align: left;
+}
+.rowRole{
+    text-align: left;
+}
+.rowBtn{
+    text-align: left;
+} */
+
+/* The popup form - hidden by default */
+.form-popup{
+    /* display: none; */
+    position: fixed;
+    top: 10vh;
+    left: 18vw;
+    /* border: 3px solid #f1f1f1; */
+    z-index: 9;
+}
+/* Add styles to the form container */
+.form-container{
+    max-width: 300px;
+    padding: 0.8rem;
+    background-color: white;
+    border-radius: 0.8rem;
+}
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=email]{
+    width: 90%;
+    padding: 0.5rem;
+    /* margin: .5rem 0; */
+    border: none;
+    background: #ebf0ec;
+    border-radius: 5px;
+}
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=email]:focus{
+    /* background-color: #ddd; */
+    background-color: #c4f5ed;
+    outline: none;
+}
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #2196f3;
+    color: white;
+    padding: .8rem;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+    margin: 1rem .8rem 0.5rem 0.8rem;
+    opacity: 0.8;
+    border-radius: 5px;
+}
+  
+  /* Add a red background color to the cancel button */
+.form-container .close {
+    background-color: red;
+}
+  
+  /* Add some hover effects to buttons */
+.form-container .btn:hover{
+    opacity: 1;
+}
