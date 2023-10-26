@@ -1,7 +1,7 @@
-import TableRow from "./TableRow";
-import "./component.css";
+import TableRow from "./TableRow"; // Import the TableRow component
+import "./component.css"; // Import component-specific CSS styles
 
-export default function Table({ tableData, handleTableData, handleFormVisibility, setSelectedId }) {
+export default function Table({ tableData, handleTableData, handleFormVisibility, setCurrentRow, selectedId, setSelectedId }) {
     return (
         <div>
             <table>
@@ -12,7 +12,7 @@ export default function Table({ tableData, handleTableData, handleFormVisibility
                     <th>Role</th>
                     <th>Actions</th>
                 </thead>
-                <TableRow tableData={tableData} handleTableData={handleTableData} handleFormVisibility={handleFormVisibility} setSelectedId={setSelectedId} />
+                <TableRow tableData={tableData} handleTableData={handleTableData} handleFormVisibility={handleFormVisibility} setCurrentRow={setCurrentRow} selectedId={selectedId} setSelectedId={setSelectedId} />
             </table>
         </div>
     );

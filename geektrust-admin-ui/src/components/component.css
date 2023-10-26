@@ -1,15 +1,12 @@
-table{
+/* table{
     font-family: sans-serif;
     width:100%;
     margin: 20px;
     border-collapse: collapse;
-    /* border: 2px solid rgb(200,200,200); */
     letter-spacing: 1px;
     font-size: 0.8rem;
 }
 td, th {
-    /* border: 1px solid rgb(190,190,190); */
-    /* border-bottom: 1px solid rgb(190,190,190); */
     padding: 10px 20px;
 }
 tr{
@@ -23,4 +20,103 @@ thead{
 thead > input{
     display: flex;
     align-items: center;
-}
+} */
+
+/* Base styles for your table */
+table {
+    font-family: sans-serif;
+    width: 100%;
+    margin: 20px;
+    border-collapse: collapse;
+    font-size: 1rem; /* Increase font size for better readability on small screens */
+  }
+  
+  /* Table header styles */
+  thead {
+    text-align: left;
+    background-color: #f2f2f2; /* Add a background color to the header for contrast */
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Input in the table header */
+  thead input {
+    /* width: 100%; */
+    padding: 8px;
+  }
+  
+  /* Table row styles */
+  tr {
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0; /* Lighter border color for rows */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Table cell styles */
+  td, th {
+    padding: 10px 20px;
+  }
+  
+  /* Styles for form pop-up */
+  .form-popup {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    max-width: 90%; /* Adjust to your preference */
+  }
+  
+  /* Full-width input fields in the form */
+  .form-container input[type="text"],
+  .form-container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Styles for the submit and close buttons */
+  .form-container .btn {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 45%;
+    margin: 10px 5px;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .form-container .close {
+    background-color: #ff5555;
+  }
+  
+  /* Responsive styles for small screens */
+  @media (max-width: 768px) {
+    table {
+      font-size: 0.8rem;
+    }
+  
+    /* Center the form on small screens */
+    .form-popup {
+      left: 10%;
+      transform: translateX(0);
+      width: 80%;
+      padding: 10px;
+    }
+  
+    /* Increase the font size of input fields on small screens */
+    .form-container input[type="text"],
+    .form-container input[type="email"] {
+      font-size: 0.9rem;
+    }
+  }
+  
